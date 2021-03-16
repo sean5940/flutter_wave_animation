@@ -18,7 +18,7 @@ abstract class PixcelFX with ChangeNotifier {
   final double pixelSize = 4;
   final double pixelSpace = 1;
   final double zoffValue = 0.9;
-  final double frequency = 0.08;
+  final double frequency = 0.06;
 
   int width;
   int height;
@@ -87,7 +87,7 @@ abstract class PixcelFX with ChangeNotifier {
             _noise.getCellular3(col.toDouble(), row.toDouble(), _zoff);
 
         // luminance = smoothStep(-2.15, 0.5, luminance);
-        luminance = smoothStep(-2.5, 0.3, luminance);
+        luminance = smoothStep(-2.3, 0.4, luminance);
 
         int color =
             HSLColor.fromAHSL(1.0, 182, luminance, luminance).toColor().value;
