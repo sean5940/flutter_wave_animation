@@ -1,8 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:noise_wave/app/widget/pixel_fx.dart';
-import 'package:vector_math/vector_math_64.dart' as vMath;
 
 // Renders a ParticleFX.
 class PixcelFXPainter extends CustomPainter {
@@ -15,7 +12,6 @@ class PixcelFXPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.transform(vMath.Matrix4.rotationX(1).storage);
     if (fx.vertices == null) {
       return;
     }
