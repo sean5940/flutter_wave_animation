@@ -12,10 +12,12 @@ A few resources to get you started if this is your first Flutter project:
 - [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
 For help getting started with Flutter, view our
+
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-<img width="428" alt="wave" src="https://user-images.githubusercontent.com/7083445/111905989-d5652a00-8a91-11eb-935d-3af21b4d34fd.png">
+![wave](https://user-images.githubusercontent.com/7083445/111906132-72c05e00-8a92-11eb-8860-87109fc5b88c.gif)
+
 
 
 
