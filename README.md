@@ -15,11 +15,10 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+![Uploading wave.png…]()
 
-![KakaoTalk_20210316_024949401](https://user-images.githubusercontent.com/7083445/111261854-75701d00-8666-11eb-81e5-638fa5c0edc8.jpg)
 
-
-https://user-images.githubusercontent.com/7083445/111261878-7dc85800-8666-11eb-854e-3d69357ed147.mp4
+https://user-images.githubusercontent.com/7083445/111905881-4a842f80-8a91-11eb-9fcc-af2af95102b2.mp4
 
 
 
