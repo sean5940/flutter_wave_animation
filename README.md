@@ -15,9 +15,8 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-![Uploading wave.png…]()
+<img width="428" alt="wave" src="https://user-images.githubusercontent.com/7083445/111905989-d5652a00-8a91-11eb-935d-3af21b4d34fd.png">
 
-<iframe width="640" height="360" src="https://user-images.githubusercontent.com/7083445/111905881-4a842f80-8a91-11eb-9fcc-af2af95102b2.mp4" frameborder="0" gesture="media" allowfullscreen=""></iframe>
 
 
 
