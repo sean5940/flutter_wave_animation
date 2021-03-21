@@ -7,19 +7,11 @@ import 'package:noise_wave/util/pixel_helpers.dart' as util;
 import 'package:vector_math/vector_math_64.dart';
 
 abstract class PixcelFX with ChangeNotifier {
-  /*
-    내폰
-    pixelSize = 6
-    pixelSpace = 1.2;
-    zoffValue = 0.5
-    frequency = 0.17
-
-   */
-  final double pixelSize = 4;
-  final double pixelSpace = 1;
-  final double zoffValue = 0.9;
-  final double frequency = 0.06;
-
+  final double baseColor;
+  final double increment;
+  final double frequency;
+  final double pixelSpace;
+  final double pixcelSize;
   int width;
   int height;
   int length;
@@ -36,9 +28,21 @@ abstract class PixcelFX with ChangeNotifier {
 
   double _zoff;
 
-  PixcelFX({@required Size size}) {
-    width = ((size.width.round()) / (pixelSize * pixelSpace)).round();
-    height = ((size.height.round()) / (pixelSize * pixelSpace)).round();
+  PixcelFX(
+      {@required Size size,
+      double baseColor = 210,
+      double frequency = 0.2,
+      double pixelSpace = 1.5,
+      double pixelSize = 15,
+      double increment = 0.08})
+      : this.baseColor = baseColor,
+        this.frequency = frequency,
+        this.pixcelSize = pixelSize,
+        this.pixelSpace = pixelSpace,
+        this.increment = increment {
+    width = ((size.width) / (pixcelSize + pixelSpace)).round();
+    height = ((size.height) / (pixcelSize + pixelSpace)).round();
+
     length = width * height;
     xy = Float32List(12 * length);
     colors = Int32List(6 * length);
@@ -55,30 +59,10 @@ abstract class PixcelFX with ChangeNotifier {
   // Fills in the Particle list, and resets each Particle.
   // Override to add more capability if needed.
   void fillInitialData() {
-    initPixel();
-    initPosition();
-    injectColor();
+    calcWave();
   }
 
-  void initPixel() {
-    int index = 0;
-    for (int row = 0; row < height; row++) {
-      for (int col = 0; col < width; col++) {
-        pixels[index] = new Pixcel(
-            x: col * pixelSize * pixelSpace, y: row * pixelSize * pixelSpace);
-        index++;
-      }
-    }
-  }
-
-  void initPosition() {
-    for (int i = 0; i < length; i++) {
-      util.injectVertex(i, xy, pixels[i].x, pixels[i].y,
-          pixels[i].x + pixelSize, pixels[i].y + pixelSize);
-    }
-  }
-
-  void injectColor() {
+  void calcWave() {
     int index = 0;
 
     for (int row = 0; row < height; row++) {
@@ -86,17 +70,35 @@ abstract class PixcelFX with ChangeNotifier {
         double luminance =
             _noise.getCellular3(col.toDouble(), row.toDouble(), _zoff);
 
-        // luminance = smoothStep(-2.15, 0.5, luminance);
-        luminance = smoothStep(-2.3, 0.4, luminance);
+        luminance = smoothStep(-2.5, 0.5, luminance);
 
-        int color =
-            HSLColor.fromAHSL(1.0, 182, luminance, luminance).toColor().value;
+        double x = 0;
+        double y = 0;
+        if (index != 0) {
+          x = index % width == 0
+              ? 0
+              : pixels[index - 1].x + pixels[index - 1].size;
+          y = index - width < 0
+              ? 0
+              : pixels[index - width].y + pixels[index - width].size;
+        }
+        x += pixelSpace;
+        y += pixelSpace;
+
+        pixels[index] = new Pixcel(x, y, pixcelSize);
+
+        util.injectVertex(index, xy, pixels[index].x, pixels[index].y,
+            pixels[index].x + pixcelSize, pixels[index].y + pixcelSize);
+
+        int color = HSLColor.fromAHSL(1.0, baseColor, luminance, luminance)
+            .toColor()
+            .value;
         util.injectColor(index, colors, color);
 
         index++;
       }
     }
-    _zoff = _zoff < 10000000 ? _zoff + zoffValue : _zoff - zoffValue;
+    _zoff = _zoff < 10000000 ? _zoff + increment : _zoff - increment;
   }
 
   void tick(Duration duration) {
@@ -106,11 +108,9 @@ abstract class PixcelFX with ChangeNotifier {
 }
 
 class Pixcel {
-  double x;
-  double y;
+  final double x;
+  final double y;
+  final double size;
 
-  Pixcel({@required double x, @required double y}) {
-    this.x = x;
-    this.y = y;
-  }
+  Pixcel(this.x, this.y, this.size);
 }

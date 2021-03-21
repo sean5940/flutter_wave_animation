@@ -9,7 +9,7 @@ class Wave extends PixcelFX {
     if (pixels[0] == null) {
       fillInitialData();
     }
-    injectColor();
+    calcWave();
 
     super.tick(duration);
   }
